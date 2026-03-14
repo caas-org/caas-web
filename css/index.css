@@ -1166,3 +1166,93 @@ main {
     padding: 0 var(--space-4);
   }
 }
+
+/* --- Print Styles --- */
+.print-only {
+  display: none;
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Hide all UI elements except print area */
+  .navbar, .footer, main {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+    width: 100%;
+  }
+
+  #print-area {
+    font-family: Arial, sans-serif;
+    color: #000;
+  }
+
+  .print-header {
+    text-align: center;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .print-header h1 {
+    font-size: 24px;
+    color: #000 !important;
+    margin-bottom: 5px;
+  }
+  
+  .print-section {
+    margin-bottom: 30px;
+  }
+
+  .print-section h2 {
+    font-size: 18px;
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    color: #000 !important;
+  }
+
+  .print-item {
+    margin-bottom: 15px;
+    padding: 12px;
+    background: #fff !important;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-item-title {
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  .print-item-detail {
+    font-size: 13px;
+    color: #333 !important;
+    font-style: italic;
+    border-left: 3px solid #666;
+    padding-left: 10px;
+    margin-top: 8px;
+  }
+  
+  .print-disclaimer {
+    margin-top: 40px;
+    padding: 15px;
+    border: 2px solid #666;
+    font-size: 12px;
+    text-align: center;
+    color: #000 !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

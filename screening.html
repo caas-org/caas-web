@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" class="lang-en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screening Tool | 筛查工具 - CAARC</title>
+  <meta name="description" content="AI-powered developmental screening checklist for children. Based on M-CHAT-R milestones with personalized bilingual guidance.">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <main>
+
+    <!-- Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <h1 class="bilingual-title">
+          <span class="en">Developmental Screening Tool</span>
+          <span class="zh">发育筛查工具</span>
+        </h1>
+        <p class="en">An AI-powered checklist to help identify if your child may benefit from a professional developmental evaluation.</p>
+        <p class="zh">一个AI驱动的检查清单，帮助您了解您的孩子是否可能需要专业的发育评估。</p>
+      </div>
+    </section>
+
+    <div class="container">
+
+      <!-- ========== Disclaimer ========== -->
+      <section class="content-section">
+        <div class="disclaimer-box">
+          <div class="disclaimer-icon">⚠️</div>
+          <div>
+            <h3 style="margin-top:0;">
+              <span class="en">Important Disclaimer</span>
+              <span class="zh">重要声明</span>
+            </h3>
+            <p class="en">
+              This screening tool is <strong>NOT a diagnostic instrument</strong>. It is based on developmental milestones from the M-CHAT-R/F and other validated screening tools, adapted for educational purposes. Only a qualified healthcare professional can diagnose autism spectrum disorder. If you have concerns about your child's development, please consult your pediatrician.
+            </p>
+            <p class="zh">
+              此筛查工具<strong>不是诊断工具</strong>。它基于M-CHAT-R/F及其他经过验证的筛查工具中的发育里程碑，仅用于教育目的。只有合格的医疗专业人员才能诊断自闭症谱系障碍。如果您对孩子的发育有任何担忧，请咨询您的儿科医生。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== Step 1: Age Group Selection ========== -->
+      <section class="content-section">
+        <h2 class="bilingual-title">
+          <span class="en">Step 1: Select Your Child's Age Group</span>
+          <span class="zh">第一步：选择您孩子的年龄段</span>
+        </h2>
+        <p class="en">Choose the age range that best matches your child.</p>
+        <p class="zh">请选择最符合您孩子的年龄段。</p>
+
+        <div class="age-group-selector">
+          <button class="age-btn" data-age="0-12">
+            <span class="age-emoji">👶</span>
+            <span class="en">0–12 Months</span>
+            <span class="zh">0–12 个月</span>
+          </button>
+          <button class="age-btn" data-age="12-24">
+            <span class="age-emoji">🧒</span>
+            <span class="en">12–24 Months</span>
+            <span class="zh">12–24 个月</span>
+          </button>
+          <button class="age-btn" data-age="24-48">
+            <span class="age-emoji">👦</span>
+            <span class="en">24–48 Months</span>
+            <span class="zh">24–48 个月</span>
+          </button>
+          <button class="age-btn" data-age="4+">
+            <span class="age-emoji">🧒</span>
+            <span class="en">4+ Years</span>
+            <span class="zh">4 岁以上</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ========== Step 2: Checklist ========== -->
+      <section class="content-section" id="checklist-section" style="display:none;">
+        <h2 class="bilingual-title">
+          <span class="en" id="checklist-title-en">Step 2: Check Areas of Concern</span>
+          <span class="zh" id="checklist-title-zh">第二步：勾选关注的方面</span>
+        </h2>
+        <div class="checklist-instructions">
+          <p class="en">
+            <strong>Check the boxes for behaviors you have <em>NOT</em> observed</strong> in your child, or areas where you have concerns. Leave unchecked if your child shows the described behavior.
+          </p>
+          <p class="zh">
+            <strong>请勾选您<em>未</em>在孩子身上观察到的行为</strong>，或您有所担忧的方面。如果您的孩子表现出所描述的行为，则不勾选。
+          </p>
+        </div>
+
+        <div id="checklist-items" class="checklist-container">
+          <!-- Dynamically populated by screening.js -->
+        </div>
+
+        <div style="text-align:center; margin-top:32px;">
+          <button id="submit-btn" class="btn btn-primary btn-lg">
+            <span class="en">🤖 Get AI-Powered Guidance</span>
+            <span class="zh">🤖 获取AI智能指导</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ========== Step 3: AI Response ========== -->
+      <section class="content-section" id="ai-response-section" style="display:none;">
+        <h2 class="bilingual-title">
+          <span class="en">Your Personalized Guidance</span>
+          <span class="zh">您的个性化指导</span>
+        </h2>
+
+        <!-- Loading Spinner -->
+        <div id="ai-loading" class="ai-loading" style="display:none;">
+          <div class="spinner"></div>
+          <p>
+            <span class="en">Analyzing your responses and generating personalized guidance...</span>
+            <span class="zh">正在分析您的回答并生成个性化指导...</span>
+          </p>
+        </div>
+
+        <!-- AI Response Content -->
+        <div id="ai-response-content" class="ai-response-card">
+          <!-- Populated by screening.js -->
+        </div>
+
+        <!-- AI Actions (Print Report) -->
+        <div id="ai-actions" style="margin-top:24px; text-align:center; display:none;">
+          <button id="print-btn" class="btn btn-secondary">
+            <span class="en">📄 Download / Print Report for Doctor</span>
+            <span class="zh">📄 下载 / 打印医生报告</span>
+          </button>
+        </div>
+
+        <!-- Bottom Disclaimer -->
+        <div class="disclaimer-box" style="margin-top:32px;">
+          <div class="disclaimer-icon">🏥</div>
+          <div>
+            <p class="en" style="margin:0;">
+              <strong>Remember:</strong> This guidance is for informational purposes only. Please consult a qualified healthcare professional for a proper evaluation. Early intervention can make a significant difference.
+            </p>
+            <p class="zh" style="margin:0;">
+              <strong>请记住：</strong>此指导仅供参考。请咨询合格的医疗专业人员进行正式评估。早期干预可以产生重大影响。
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="print-area" class="print-only"></div>
+
+  <script src="js/screening.js"></script>
+  <script src="js/nav.js"></script>
+</body>
+</html>

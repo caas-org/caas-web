@@ -165,9 +165,11 @@ async function getAIGuidance() {
   const responseContent = document.getElementById('ai-response-content');
   const loadingEl = document.getElementById('ai-loading');
   const submitBtn = document.getElementById('submit-btn');
+  const aiActions = document.getElementById('ai-actions');
 
   responseSection.style.display = 'block';
   responseContent.style.display = 'none';
+  aiActions.style.display = 'none';
   loadingEl.style.display = 'flex';
   submitBtn.disabled = true;
 
@@ -257,6 +259,7 @@ CRITICAL RULES:
     responseContent.innerHTML = renderMarkdown(aiText);
     responseContent.style.display = 'block';
     loadingEl.style.display = 'none';
+    aiActions.style.display = 'block';
 
   } catch (error) {
     loadingEl.style.display = 'none';
@@ -284,6 +287,79 @@ CRITICAL RULES:
   } finally {
     submitBtn.disabled = false;
   }
+}
+
+// ============================================================
+// Print Report Logic
+// ============================================================
+function generatePrintReport() {
+  const currentLang = document.documentElement.classList.contains('lang-zh') ? 'zh' : 'en';
+  
+  const checked = getCheckedItems();
+  const unchecked = getUncheckedItems();
+  const data = checklistData[currentAgeGroup];
+  const ageLabel = currentLang === 'en' ? data.labelEn : data.labelZh;
+  const dateStr = new Date().toLocaleDateString(currentLang === 'en' ? 'en-US' : 'zh-CN', {
+    year: 'numeric', month: 'long', day: 'numeric'
+  });
+
+  const t = {
+    title: currentLang === 'en' ? 'Developmental Screening Report' : '发育筛查报告',
+    subtitle: currentLang === 'en' ? 'Generated via CAARC (Chinese American Autism Resource Center)' : '由此生成 CAARC (华裔自闭症资源中心)',
+    age: currentLang === 'en' ? 'Child Age Group:' : '儿童年龄段:',
+    date: currentLang === 'en' ? 'Date:' : '日期:',
+    concerns: currentLang === 'en' ? 'Areas of Concern (Behaviors NOT observed)' : '关注区域 (未观察到的行为)',
+    typical: currentLang === 'en' ? 'Typical Development (Behaviors observed)' : '典型发育 (观察到的行为)',
+    noConcerns: currentLang === 'en' ? 'No specific concerns were noted.' : '没有记录到具体的担忧。',
+    notes: currentLang === 'en' ? 'Parent Notes:' : '家长备注:',
+    disclaimer: currentLang === 'en' ? 'DISCLAIMER: This report is a summary of parent observations based on developmental milestones. It is NOT a diagnostic instrument. Please share this with a qualified healthcare professional or pediatrician for a proper evaluation.' : '免责声明：本报告是基于发育里程碑的家长观察总结。它不是诊断工具。请与合格的医疗专业人员或儿科医生分享此报告以进行适当的评估。'
+  };
+
+  let concernsHtml = '';
+  if (checked.length > 0) {
+    concernsHtml = checked.map(q => `
+      <div class="print-item">
+        <div class="print-item-title">❌ ${q[currentLang]}</div>
+        ${q.userDetails ? `<div class="print-item-detail"><strong>${t.notes}</strong> ${q.userDetails}</div>` : ''}
+      </div>
+    `).join('');
+  } else {
+    concernsHtml = `<p>${t.noConcerns}</p>`;
+  }
+
+  let typicalHtml = '';
+  if (unchecked.length > 0) {
+    typicalHtml = unchecked.map(q => `
+      <div class="print-item" style="padding: 10px; margin-bottom: 8px;">
+        <div class="print-item-title" style="margin-bottom: 0;">✅ ${q[currentLang]}</div>
+      </div>
+    `).join('');
+  }
+
+  const reportHtml = `
+    <div class="print-header">
+      <h1>${t.title}</h1>
+      <p>${t.subtitle}</p>
+      <p><strong>${t.age}</strong> ${ageLabel} &nbsp;&nbsp;|&nbsp;&nbsp; <strong>${t.date}</strong> ${dateStr}</p>
+    </div>
+    
+    <div class="print-section">
+      <h2>${t.concerns}</h2>
+      ${concernsHtml}
+    </div>
+
+    <div class="print-section">
+      <h2>${t.typical}</h2>
+      ${typicalHtml}
+    </div>
+
+    <div class="print-disclaimer">
+      <strong>${t.disclaimer}</strong>
+    </div>
+  `;
+
+  document.getElementById('print-area').innerHTML = reportHtml;
+  window.print();
 }
 
 // ============================================================
@@ -336,6 +412,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const submitBtn = document.getElementById('submit-btn');
   if (submitBtn) {
     submitBtn.addEventListener('click', getAIGuidance);
+  }
+
+  // Print button
+  const printBtn = document.getElementById('print-btn');
+  if (printBtn) {
+    printBtn.addEventListener('click', generatePrintReport);
   }
 
   // Note on checklist: questions where the parent checks = area of CONCERN
