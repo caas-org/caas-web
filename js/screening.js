@@ -7,7 +7,7 @@
  * Get a free key at: https://aistudio.google.com/apikey
  * ============================================================
  */
-const GEMINI_API_KEY = 'AIzaSyBnOUIZoscULiqjXnjJZOBXoGcZVx3QT18';
+const GEMINI_API_KEY = 'YOUR_API_KEY_HERE';
 const GEMINI_MODEL = 'gemini-2.5-flash';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
