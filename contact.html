@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" class="lang-en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | 联系我们 - CAARC</title>
+  <meta name="description" content="Contact the Chinese American Autism Resource Center with questions, suggestions, or to share your story.">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <main>
+
+    <section class="page-hero">
+      <div class="container">
+        <h1 class="bilingual-title">
+          <span class="en">Contact Us</span>
+          <span class="zh">联系我们</span>
+        </h1>
+        <p class="en">We'd love to hear from you. Reach out with questions, suggestions, or to share your story.</p>
+        <p class="zh">我们期待您的来信。如有问题、建议或想分享您的故事，请联系我们。</p>
+      </div>
+    </section>
+
+    <div class="container">
+
+      <section class="content-section">
+        <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+
+          <!-- Contact Form -->
+          <div class="content-block">
+            <h2 class="bilingual-title" style="margin-top:0;">
+              <span class="en">Send Us a Message</span>
+              <span class="zh">给我们留言</span>
+            </h2>
+
+            <!-- ========== EDITABLE: Contact Form ========== -->
+            <form id="contact-form" onsubmit="handleSubmit(event)">
+              <div class="form-group">
+                <label>
+                  <span class="en">Name</span>
+                  <span class="zh">姓名</span>
+                </label>
+                <input type="text" id="name" name="name" required>
+              </div>
+
+              <div class="form-group">
+                <label>
+                  <span class="en">Email</span>
+                  <span class="zh">邮箱</span>
+                </label>
+                <input type="email" id="email" name="email" required>
+              </div>
+
+              <div class="form-group">
+                <label>
+                  <span class="en">Subject</span>
+                  <span class="zh">主题</span>
+                </label>
+                <select id="subject" name="subject">
+                  <option value="general">
+                    General Question / 一般问题
+                  </option>
+                  <option value="resource">
+                    Resource Request / 资源请求
+                  </option>
+                  <option value="story">
+                    Share My Story / 分享我的故事
+                  </option>
+                  <option value="volunteer">
+                    Volunteer / 志愿服务
+                  </option>
+                  <option value="other">
+                    Other / 其他
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>
+                  <span class="en">Message</span>
+                  <span class="zh">留言内容</span>
+                </label>
+                <textarea id="message" name="message" rows="6" required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+                <span class="en">Send Message</span>
+                <span class="zh">发送留言</span>
+              </button>
+
+              <div id="form-status" style="margin-top:16px;text-align:center;display:none;"></div>
+            </form>
+            <!-- ========== END EDITABLE ========== -->
+          </div>
+
+          <!-- Contact Info -->
+          <div>
+            <!-- ========== EDITABLE: Contact Information ========== -->
+            <div class="content-block">
+              <h2 class="bilingual-title" style="margin-top:0;">
+                <span class="en">Other Ways to Reach Us</span>
+                <span class="zh">其他联系方式</span>
+              </h2>
+
+              <div style="margin-bottom:24px;">
+                <h3 style="font-size:1rem;">
+                  <span class="en">📧 Email</span>
+                  <span class="zh">📧 邮箱</span>
+                </h3>
+                <p><a href="mailto:info@caarc.org">info@caarc.org</a></p>
+              </div>
+
+              <div style="margin-bottom:24px;">
+                <h3 style="font-size:1rem;">
+                  <span class="en">📍 Location</span>
+                  <span class="zh">📍 地点</span>
+                </h3>
+                <p class="en">Serving Chinese American families nationwide</p>
+                <p class="zh">服务全国华裔美国家庭</p>
+              </div>
+
+              <div style="margin-bottom:24px;">
+                <h3 style="font-size:1rem;">
+                  <span class="en">🕐 Response Time</span>
+                  <span class="zh">🕐 回复时间</span>
+                </h3>
+                <p class="en">We typically respond within 1-2 business days. Messages in both English and Chinese are welcome.</p>
+                <p class="zh">我们通常在1-2个工作日内回复。欢迎使用中文或英文留言。</p>
+              </div>
+            </div>
+            <!-- ========== END EDITABLE ========== -->
+
+            <!-- ========== EDITABLE: Emergency Resources ========== -->
+            <div class="content-block" style="border-left: 3px solid var(--warning);">
+              <h3 class="bilingual-title" style="margin-top:0;">
+                <span class="en">⚠️ Need Immediate Help?</span>
+                <span class="zh">⚠️ 需要立即帮助？</span>
+              </h3>
+              <div class="en">
+                <p>If you or your child are in crisis, please contact:</p>
+                <ul>
+                  <li><strong>988 Suicide & Crisis Lifeline:</strong> Call or text 988 (available in multiple languages)</li>
+                  <li><strong>Crisis Text Line:</strong> Text HOME to 741741</li>
+                  <li><strong>Emergency:</strong> Call 911</li>
+                </ul>
+              </div>
+              <div class="zh">
+                <p>如果您或您的孩子正处于危机中，请联系：</p>
+                <ul>
+                  <li><strong>988自杀和危机生命线：</strong>拨打或发短信至988（提供多语言服务）</li>
+                  <li><strong>危机短信热线：</strong>发送HOME到741741</li>
+                  <li><strong>紧急情况：</strong>拨打911</li>
+                </ul>
+              </div>
+            </div>
+            <!-- ========== END EDITABLE ========== -->
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault();
+      const status = document.getElementById('form-status');
+      status.style.display = 'block';
+
+      // For static site, show a message directing to email
+      const lang = document.documentElement.classList.contains('lang-zh') ? 'zh' : 'en';
+      if (lang === 'zh') {
+        status.innerHTML = '<div class="info-box success"><p>感谢您的留言！由于这是一个静态网站，请将您的消息直接发送到 <a href="mailto:info@caarc.org">info@caarc.org</a>。我们会尽快回复您。</p></div>';
+      } else {
+        status.innerHTML = '<div class="info-box success"><p>Thank you for your message! Since this is a static website, please email your message directly to <a href="mailto:info@caarc.org">info@caarc.org</a>. We\'ll get back to you soon.</p></div>';
+      }
+    }
+  </script>
+  <script src="js/nav.js"></script>
+</body>
+</html>
