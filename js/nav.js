@@ -19,6 +19,7 @@
     { href: 'resources.html', en: 'Resources', zh: '资源' },
     { href: 'navigate-system.html', en: 'Navigate the System', zh: '体系导航' },
     { href: 'community.html', en: 'Community', zh: '社区' },
+    { href: 'screening.html', en: 'Screening Tool', zh: '筛查工具' },
     { href: 'faq.html', en: 'FAQ', zh: '常见问题' },
     { href: 'contact.html', en: 'Contact', zh: '联系我们' },
   ];

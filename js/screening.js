@@ -7,7 +7,7 @@
  * Get a free key at: https://aistudio.google.com/apikey
  * ============================================================
  */
-const GEMINI_API_KEY = 'AIzaSyAMJ8IoQnqQpARb1zPjbilfeg963WhUM-k';
+const GEMINI_API_KEY = 'AIzaSyBnOUIZoscULiqjXnjJZOBXoGcZVx3QT18';
 const GEMINI_MODEL = 'gemini-2.5-flash';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
@@ -202,22 +202,30 @@ CRITICAL RULES:
 8. Be warm, supportive, and encouraging
 9. Format with clear sections using markdown headings (##) and bullet points`;
 
-  const userPrompt = `A parent has completed a developmental screening checklist for their child in the ${ageLabel} age group.
+  let userPrompt = `A parent has completed a developmental screening checklist for their child in the ${ageLabel} age group.\n\n`;
 
-Out of ${totalQuestions} questions:
-- ${checked.length} areas of concern were identified
-- ${unchecked.length} areas showed typical development
+  userPrompt += `Out of ${totalQuestions} questions:\n`;
+  userPrompt += `- ${checked.length} areas of concern were identified\n`;
+  userPrompt += `- ${unchecked.length} areas showed typical development\n\n`;
 
-${checked.length > 0 ? `Areas where the parent noted concerns (behaviors NOT observed or present):\n${concernBehaviors}` : 'The parent did not note any specific concerns.'}
+  if (checked.length > 0) {
+    userPrompt += `Here are the SPECIFIC AREAS OF CONCERN (behaviors NOT observed or present), along with the parent's detailed input:\n`;
+    userPrompt += concernBehaviors + `\n\n`;
+  } else {
+    userPrompt += `The parent did not note any specific concerns.\n\n`;
+  }
 
-${unchecked.length > 0 ? `Areas showing typical development (behaviors observed):\n${typicalBehaviors}` : ''}
+  if (unchecked.length > 0) {
+    userPrompt += `Here are the areas showing TYPICAL DEVELOPMENT (behaviors observed):\n`;
+    userPrompt += typicalBehaviors + `\n\n`;
+  }
 
-Please provide (in ${currentLang} ONLY):
-1. A brief assessment of the overall screening results (low concern / some concern / elevated concern)
-2. Explanation of what these results might mean
-3. Specific recommended next steps
-4. Culturally sensitive encouragement for the family
-5. Relevant resources and who to contact`;
+  userPrompt += `Please provide (in ${currentLang} ONLY):\n`;
+  userPrompt += `1. A brief assessment of the overall screening results (low concern / some concern / elevated concern)\n`;
+  userPrompt += `2. Explanation of what these results might mean\n`;
+  userPrompt += `3. Specific recommended next steps\n`;
+  userPrompt += `4. Culturally sensitive encouragement for the family\n`;
+  userPrompt += `5. Relevant resources and who to contact`;
 
   try {
     if (GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
