@@ -105,6 +105,7 @@ function selectAgeGroup(group) {
       <span class="question-text">
         <span class="en">${q.en}</span>
         <span class="zh">${q.zh}</span>
+        <textarea id="detail-${q.id}" class="detail-input" placeholder="${lang === 'en' ? 'Optional: Provide more details or examples...' : '选填：提供更多细节或例子...'}"></textarea>
       </span>
     </label>
   `).join('');
@@ -128,7 +129,9 @@ function getCheckedItems() {
   data.questions.forEach(q => {
     const el = document.getElementById(`check-${q.id}`);
     if (el && el.checked) {
-      checked.push(q);
+      const detailEl = document.getElementById(`detail-${q.id}`);
+      const details = detailEl && detailEl.value.trim() ? detailEl.value.trim() : null;
+      checked.push({ ...q, userDetails: details });
     }
   });
   return checked;
@@ -172,7 +175,14 @@ async function getAIGuidance() {
   responseSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   // Build the prompt
-  const concernBehaviors = checked.map(q => `- ${q.en}`).join('\n');
+  // Include user details if provided
+  const concernBehaviors = checked.map(q => {
+    let text = `- ${q.en}`;
+    if (q.userDetails) {
+      text += `\n  Parent's specific details/examples: "${q.userDetails}"`;
+    }
+    return text;
+  }).join('\n');
   const typicalBehaviors = unchecked.map(q => `- ${q.en}`).join('\n');
 
   // Determine current language
@@ -186,10 +196,11 @@ CRITICAL RULES:
 2. ALWAYS prominently include a disclaimer that this is NOT a diagnosis and recommend professional evaluation
 3. You MUST respond ONLY in ${currentLang}. Do not include translations.
 4. Be culturally sensitive - acknowledge that in Chinese culture, developmental concerns may carry stigma, and normalize seeking help
-5. Provide specific, actionable next steps
-6. Mention relevant resources (pediatrician, Early Intervention for ages 0-3, school district evaluation for 3+)
-7. Be warm, supportive, and encouraging
-8. Format with clear sections using markdown headings (##) and bullet points`;
+5. Address the specific details and examples the parent provided for their concerns. Incorporate these into your assessment and recommendations to make the guidance highly personalized
+6. Provide specific, actionable next steps
+7. Mention relevant resources (pediatrician, Early Intervention for ages 0-3, school district evaluation for 3+)
+8. Be warm, supportive, and encouraging
+9. Format with clear sections using markdown headings (##) and bullet points`;
 
   const userPrompt = `A parent has completed a developmental screening checklist for their child in the ${ageLabel} age group.
 
