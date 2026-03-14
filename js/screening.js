@@ -3,11 +3,13 @@
  * Uses Gemini API (free tier) for personalized bilingual guidance.
  *
  * ============================================================
- * EDITABLE: Set your Gemini API key below
- * Get a free key at: https://aistudio.google.com/apikey
+ * API KEY CONFIGURATION:
+ * The API key is now stored in js/config.js which is gitignored.
+ * To use locally, copy js/config.template.js to js/config.js 
+ * and add your key.
  * ============================================================
  */
-const GEMINI_API_KEY = 'YOUR_API_KEY_HERE';
+const GEMINI_API_KEY = typeof CONFIG !== 'undefined' ? CONFIG.GEMINI_API_KEY : '';
 const GEMINI_MODEL = 'gemini-2.5-flash';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
@@ -269,12 +271,12 @@ CRITICAL RULES:
       responseContent.innerHTML = `
         <div class="ai-error">
           <h3>⚙️ <span class="en">API Key Required</span><span class="zh">需要 API 密钥</span></h3>
-          <p class="en">To use the AI-powered guidance feature, a Gemini API key needs to be configured. 
+          <p class="en">To use the AI-powered guidance feature locally, a Gemini API key needs to be configured. 
           <br>Get a free key at <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a>
-          <br>Then add it to <code>js/screening.js</code> at the top of the file.</p>
-          <p class="zh">要使用AI指导功能，需要配置 Gemini API 密钥。
+          <br>Then copy <code>js/config.template.js</code> to <code>js/config.js</code> and add your key.</p>
+          <p class="zh">要在本地使用AI指导功能，需要配置 Gemini API 密钥。
           <br>在 <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a> 获取免费密钥
-          <br>然后将其添加到 <code>js/screening.js</code> 文件的顶部。</p>
+          <br>然后将 <code>js/config.template.js</code> 复制为 <code>js/config.js</code> 并添加您的密钥。</p>
         </div>`;
     } else {
       responseContent.innerHTML = `
