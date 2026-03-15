@@ -180,10 +180,27 @@ async function getAIGuidance() {
 
   // Build the prompt
   // Include user details if provided
+  // Robust browser-safe PII scrubber (Regex-based)
+  // Replaces Emails, Phone Numbers, and SSNs
+  function scrubPII(text) {
+    if (!text) return text;
+    let scrubbed = text;
+    // Scrub Emails
+    scrubbed = scrubbed.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, '[EMAIL]');
+    // Scrub Phone Numbers (US & International variants)
+    scrubbed = scrubbed.replace(/(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\b/g, '[PHONE_NUMBER]');
+    // Scrub SSN
+    scrubbed = scrubbed.replace(/\b\d{3}[- ]?\d{2}[- ]?\d{4}\b/g, '[SSN]');
+    // Names and context-specific data might not be perfectly caught by regex,
+    // but the system prompt handles this expectation.
+    return scrubbed;
+  }
+
   const concernBehaviors = checked.map(q => {
     let text = `- ${q.en}`;
     if (q.userDetails) {
-      text += `\n  Parent's specific details/examples: "${q.userDetails}"`;
+      const safeDetails = scrubPII(q.userDetails);
+      text += `\n  Parent's specific details/examples: "${safeDetails}"`;
     }
     return text;
   }).join('\n');
@@ -204,7 +221,8 @@ CRITICAL RULES:
 6. Provide specific, actionable next steps
 7. Mention relevant resources (pediatrician, Early Intervention for ages 0-3, school district evaluation for 3+)
 8. Be warm, supportive, and encouraging
-9. Format with clear sections using markdown headings (##) and bullet points`;
+9. Format with clear sections using markdown headings (##) and bullet points
+10. Note: The parent's specific examples may have been automatically scrubbed for privacy and may contain placeholders like [NAME] or [PHONE_NUMBER]. Please ignore the placeholders and focus on the surrounding context.`;
 
   let userPrompt = `A parent has completed a developmental screening checklist for their child in the ${ageLabel} age group.\n\n`;
 
@@ -236,7 +254,7 @@ CRITICAL RULES:
     const GEMINI_API_KEY = typeof window.LOCAL_KEYS !== 'undefined' ? window.LOCAL_KEYS.GEMINI_API_KEY : '';
     const FIREBASE_CONFIG = typeof CONFIG !== 'undefined' ? CONFIG.FIREBASE_CONFIG : null;
     const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
-    
+
     // Check Local Dev Toggle Override
     let activeRoute = 'rest'; // Default
     if (GEMINI_API_KEY) {
@@ -281,8 +299,8 @@ CRITICAL RULES:
       // MODE 2: Production (Firebase AI Logic SDK using Gemini Developer API backend)
       if (!firebaseModel) {
         // Dynamically import Firebase SDKs for AI Logic
-        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js');
-        const { getAI, getGenerativeModel, GoogleAIBackend } = await import('https://www.gstatic.com/firebasejs/11.1.0/firebase-ai.js');
+        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js');
+        const { getAI, getGenerativeModel, GoogleAIBackend } = await import('https://www.gstatic.com/firebasejs/12.10.0/firebase-ai.js');
 
         const app = initializeApp(FIREBASE_CONFIG);
         const ai = getAI(app, { backend: new GoogleAIBackend() });

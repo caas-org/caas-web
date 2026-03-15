@@ -9,33 +9,36 @@
 
 /* --- CSS Custom Properties --- */
 :root {
-  /* Colors */
-  --primary: #3B82F6;
-  --primary-dark: #2563EB;
-  --primary-light: #60A5FA;
-  --primary-glow: rgba(59, 130, 246, 0.15);
-  --secondary: #8B5CF6;
-  --secondary-dark: #7C3AED;
-  --accent: #F59E0B;
-  --accent-light: #FCD34D;
+  /* Colors (Autism-friendly calm theme) */
+  --primary: #5c8ca7; /* Muted Blue */
+  --primary-dark: #4b738a;
+  --primary-light: #7ea3b8;
+  --primary-glow: rgba(92, 140, 167, 0.15); /* #5c8ca7 with opacity */
+  --secondary: #82a896; /* Soft green */
+  --secondary-dark: #6a8a7a;
+  --accent: #d89c60; /* Warm Peach/Tan */
+  --accent-light: #e6b885;
 
-  --bg-primary: #0F172A;
-  --bg-secondary: #1E293B;
-  --bg-card: #1E293B;
-  --bg-card-hover: #334155;
-  --bg-glass: rgba(30, 41, 59, 0.8);
+  /* Backgrounds: Pastels and Soft Creams instead of stark white/black */
+  --bg-primary: #f8f6f0; /* Off-white cream */
+  --bg-secondary: #f0eee6; /* Slightly deeper cream */
+  --bg-card: #ffffff; /* White cards on cream background */
+  --bg-card-hover: #faf9f5;
+  --bg-glass: rgba(248, 246, 240, 0.9);
 
-  --text-primary: #F1F5F9;
-  --text-secondary: #94A3B8;
+  /* Typography: Dark slate instead of pure black */
+  --text-primary: #334155;
+  --text-secondary: #475569;
   --text-muted: #64748B;
-  --text-accent: #60A5FA;
+  --text-accent: #4b738a; /* primary-dark */
 
-  --border: #334155;
-  --border-light: #475569;
+  --border: #e2e8f0;
+  --border-light: #cbd5e1;
 
-  --success: #10B981;
-  --warning: #F59E0B;
-  --error: #EF4444;
+  /* Softer semantics */
+  --success: #34d399; /* Softer emerald */
+  --warning: #fbbf24; /* Softer amber */
+  --error: #f87171; /* Softer red */
 
   /* Typography */
   --font-en: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -246,9 +249,9 @@ li {
   width: 40px;
   object-fit: contain;
   border-radius: var(--border-radius-sm);
-  background: white;
-  /* Since the AI logo has a white background */
+  /* Since the background is now light, the logo icon should blend well */
   padding: 2px;
+  background: transparent;
 }
 
 .nav-logo-text {
@@ -292,7 +295,7 @@ li {
 .nav-links a:hover,
 .nav-links a.active {
   color: var(--text-primary);
-  background: rgba(59, 130, 246, 0.1);
+  background: rgba(92, 140, 167, 0.1);
 }
 
 .nav-links a.active {
@@ -305,7 +308,7 @@ li {
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
-  background: rgba(59, 130, 246, 0.1);
+  background: rgba(92, 140, 167, 0.1);
   border: 1px solid var(--border);
   border-radius: var(--border-radius-sm);
   color: var(--text-primary);
@@ -317,7 +320,7 @@ li {
 }
 
 .lang-toggle:hover {
-  background: rgba(59, 130, 246, 0.2);
+  background: rgba(92, 140, 167, 0.2);
   border-color: var(--primary);
 }
 
@@ -523,12 +526,12 @@ main {
 .btn-primary {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 15px rgba(92, 140, 167, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 6px 20px rgba(92, 140, 167, 0.4);
   color: white;
 }
 
@@ -540,8 +543,8 @@ main {
 
 .btn-secondary:hover {
   border-color: var(--primary);
-  background: rgba(59, 130, 246, 0.1);
-  color: white;
+  background: rgba(92, 140, 167, 0.1);
+  color: var(--primary-dark);
 }
 
 /* --- Accordion (FAQ) --- */
@@ -667,7 +670,7 @@ main {
 /* Info boxes  */
 .info-box {
   border-left: 4px solid var(--primary);
-  background: rgba(59, 130, 246, 0.05);
+  background: rgba(92, 140, 167, 0.08);
   padding: var(--space-4) var(--space-6);
   border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
   margin: var(--space-6) 0;
@@ -675,12 +678,12 @@ main {
 
 .info-box.warning {
   border-left-color: var(--warning);
-  background: rgba(245, 158, 11, 0.05);
+  background: rgba(251, 191, 36, 0.1);
 }
 
 .info-box.success {
   border-left-color: var(--success);
-  background: rgba(16, 185, 129, 0.05);
+  background: rgba(52, 211, 153, 0.1);
 }
 
 /* --- Contact Form --- */
@@ -870,12 +873,12 @@ main {
 
 /* --- Screening Checklist --- */
 
-/* Disclaimer Box */
+/* Disclaimer Box - softer orange */
 .disclaimer-box {
   display: flex;
   gap: var(--space-4);
-  background: rgba(245, 158, 11, 0.08);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.4);
   border-radius: var(--border-radius);
   padding: var(--space-6);
   margin-bottom: var(--space-6);
@@ -918,16 +921,16 @@ main {
 
 .age-btn:hover {
   border-color: var(--primary);
-  background: rgba(59, 130, 246, 0.05);
+  background: rgba(92, 140, 167, 0.05); /* Match new primary */
   color: var(--text-primary);
   transform: translateY(-2px);
 }
 
 .age-btn.active {
   border-color: var(--primary);
-  background: rgba(59, 130, 246, 0.1);
+  background: rgba(92, 140, 167, 0.1); /* Match new primary */
   color: var(--text-primary);
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 20px rgba(92, 140, 167, 0.15);
 }
 
 .age-emoji {
@@ -1148,8 +1151,8 @@ main {
 
 /* AI Error */
 .ai-error {
-  background: rgba(239, 68, 68, 0.05);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  background: rgba(248, 113, 113, 0.05); /* Soft red instead of bright red */
+  border: 1px solid rgba(248, 113, 113, 0.2);
   border-radius: var(--border-radius);
   padding: var(--space-6);
 }
