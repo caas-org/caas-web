@@ -1,7 +1,7 @@
-# Chinese American Autism Resource Center
-# https://caas-org.github.io/caas-web/
+# Chinese American Autism Society
+# https://www.caasus.org/
 
 User-agent: *
 Allow: /
 
-Sitemap: https://caas-org.github.io/caas-web/sitemap.xml
+Sitemap: https://www.caasus.org/sitemap.xml
