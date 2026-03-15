@@ -10,8 +10,10 @@
  * ============================================================
  */
 const GEMINI_API_KEY = typeof CONFIG !== 'undefined' ? CONFIG.GEMINI_API_KEY : '';
+const FIREBASE_CONFIG = typeof CONFIG !== 'undefined' ? CONFIG.FIREBASE_CONFIG : null;
 const GEMINI_MODEL = 'gemini-2.5-flash';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+let firebaseModel = null;
 
 // ============================================================
 // Checklist Questions by Age Group
@@ -235,32 +237,68 @@ CRITICAL RULES:
     if (GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
       throw new Error('API_KEY_NOT_SET');
     }
+    let resultText = '';
 
-    const response = await fetch(GEMINI_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system_instruction: { parts: [{ text: systemPrompt }] },
-        contents: [{ parts: [{ text: userPrompt }] }],
+    if (GEMINI_API_KEY && GEMINI_API_KEY !== 'YOUR_API_KEY_HERE') {
+      // MODE 1: Local Development (Direct REST API)
+      const data = {
+        contents: [{ parts: [{ text: userMessage }] }],
+        systemInstruction: {
+          parts: [{ text: systemPrompt }]
+        },
         generationConfig: {
-          temperature: 0.7,
-          maxOutputTokens: 2048,
+          temperature: 0.3, 
+          topK: 40,
+          topP: 0.95,
         }
-      })
-    });
+      };
 
-    if (!response.ok) {
-      const errData = await response.json().catch(() => ({}));
-      throw new Error(errData.error?.message || `API returned ${response.status}`);
+      const res = await fetch(GEMINI_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        throw new Error(json.error?.message || 'API Error');
+      }
+      resultText = json.candidates[0].content.parts[0].text;
+
+    } else if (FIREBASE_CONFIG) {
+      // MODE 2: Production (Firebase AI Logic SDK)
+      if (!firebaseModel) {
+        // Dynamically import Firebase SDKs
+        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js');
+        const { getVertexAI, getGenerativeModel } = await import('https://www.gstatic.com/firebasejs/11.1.0/firebase-vertexai.js');
+        
+        const app = initializeApp(FIREBASE_CONFIG);
+        const vertexAI = getVertexAI(app);
+        
+        firebaseModel = getGenerativeModel(vertexAI, { 
+          model: GEMINI_MODEL,
+          systemInstruction: systemPrompt,
+          generationConfig: {
+            temperature: 0.3,
+            topK: 40,
+            topP: 0.95
+          }
+        });
+      }
+      
+      const result = await firebaseModel.generateContent(userMessage);
+      resultText = result.response.text();
+
+    } else {
+      // Configuration Error
+      throw new Error('API Key or Firebase Config not found in config.js');
     }
 
-    const data = await response.json();
-    const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response received.';
-
-    // Render markdown-like response
-    responseContent.innerHTML = renderMarkdown(aiText);
-    responseContent.style.display = 'block';
     loadingEl.style.display = 'none';
+    // Assuming formatGeminiResponse is a new function or renderMarkdown is renamed/updated
+    // For now, we'll use renderMarkdown as it exists.
+    const cleanHtml = renderMarkdown(resultText); 
+    responseContent.innerHTML = cleanHtml;
+    responseContent.style.display = 'block';
     aiActions.style.display = 'block';
 
   } catch (error) {
