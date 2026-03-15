@@ -80,9 +80,8 @@
     <nav class="navbar" role="navigation" aria-label="Main navigation">
       <div class="nav-container">
         <a href="index.html" class="nav-logo" aria-label="Home">
-          <img src="images/logo.png" alt="CAAS Logo" class="nav-logo-icon">
+          <img src="images/logo_text.png" alt="CAAS Logo" class="nav-logo-icon">
           <div class="nav-logo-text">
-            <span class="en">CAARC</span>
             <span class="zh">华裔自闭症资源中心</span>
           </div>
         </a>

@@ -196,12 +196,12 @@ li {
 }
 
 .nav-logo-icon {
-  height: 40px;
-  width: 40px;
+  height: 44px;
+  width: auto;
   object-fit: contain;
   border-radius: var(--border-radius-sm);
   background: white; /* Since the AI logo has a white background */
-  padding: 2px;
+  padding: 4px;
 }
 
 .nav-logo-text {
