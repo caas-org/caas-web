@@ -135,6 +135,27 @@ h2 { font-size: var(--font-size-3xl); }
 h3 { font-size: var(--font-size-2xl); }
 h4 { font-size: var(--font-size-xl); }
 
+.footer-about h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-3);
+  color: var(--text-primary);
+}
+
+.footer-logo {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  border-radius: var(--border-radius-md);
+  background: white;
+  padding: 6px;
+  display: block;
+}
+
+.footer-about p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
 p {
   margin-bottom: var(--space-4);
   color: var(--text-secondary);
@@ -196,12 +217,12 @@ li {
 }
 
 .nav-logo-icon {
-  height: 44px;
-  width: auto;
+  height: 40px;
+  width: 40px;
   object-fit: contain;
   border-radius: var(--border-radius-sm);
   background: white; /* Since the AI logo has a white background */
-  padding: 4px;
+  padding: 2px;
 }
 
 .nav-logo-text {
