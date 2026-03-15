@@ -174,19 +174,24 @@
     </div>
   </main>
 
+  <script src="js/config.js"></script>
   <script>
     function handleSubmit(event) {
       event.preventDefault();
-      const status = document.getElementById('form-status');
-      status.style.display = 'block';
-
-      // For static site, show a message directing to email
-      const lang = document.documentElement.classList.contains('lang-zh') ? 'zh' : 'en';
-      if (lang === 'zh') {
-        status.innerHTML = '<div class="info-box success"><p>感谢您的留言！由于这是一个静态网站，请将您的消息直接发送到我们的邮箱。我们会尽快回复您。</p></div>';
-      } else {
-        status.innerHTML = '<div class="info-box success"><p>Thank you for your message! Since this is a static website, please email your message directly to us. We\'ll get back to you soon.</p></div>';
+      var email = (typeof CONFIG !== 'undefined' && CONFIG.EMAIL) ? CONFIG.EMAIL : '';
+      if (!email) {
+        var status = document.getElementById('form-status');
+        status.style.display = 'block';
+        status.innerHTML = '<div class="info-box"><p>Email not configured. Please set up js/config.js</p></div>';
+        return;
       }
+      var name = document.getElementById('name').value;
+      var userEmail = document.getElementById('email').value;
+      var subjectEl = document.getElementById('subject');
+      var subject = subjectEl.options[subjectEl.selectedIndex].text || 'Message from CAAS Website';
+      var message = document.getElementById('message').value;
+      var body = 'Name: ' + name + '\nEmail: ' + userEmail + '\n\n' + message;
+      window.location.href = 'mailto:' + email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     }
 
     // Populate email from config
@@ -201,7 +206,6 @@
       }
     });
   </script>
-  <script src="js/config.js"></script>
   <script src="js/nav.js"></script>
 </body>
 
