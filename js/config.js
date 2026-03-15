@@ -10,7 +10,6 @@
 // ============================================================
 
 const CONFIG = {
-  GEMINI_API_KEY: 'AIzaSyACnYMAULQRPXWRF7NWxyclvfQAO60bXM8',
   EMAIL: 'info@caasus.org',
   WEB3FORMS_KEY: '42bd6081-ca61-48e0-be70-701dcc76ef80',
   FIREBASE_CONFIG: {

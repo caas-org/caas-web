@@ -166,8 +166,14 @@
 
   <div id="print-area" class="print-only"></div>
 
-  <!-- Load API Key Configuration -->
+  <!-- Load Configuration -->
   <script src="js/config.js"></script>
+  <!-- Load Local API Keys (Gitignored, for local testing only) -->
+  <script>
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      document.write('<script src="js/keys.js"><\/script>');
+    }
+  </script>
 
   <script src="js/screening.js"></script>
   <script src="js/nav.js"></script>

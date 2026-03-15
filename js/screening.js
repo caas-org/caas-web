@@ -9,7 +9,7 @@
  * and add your key.
  * ============================================================
  */
-const GEMINI_API_KEY = typeof CONFIG !== 'undefined' ? CONFIG.GEMINI_API_KEY : '';
+const GEMINI_API_KEY = typeof window.LOCAL_KEYS !== 'undefined' ? window.LOCAL_KEYS.GEMINI_API_KEY : '';
 const FIREBASE_CONFIG = typeof CONFIG !== 'undefined' ? CONFIG.FIREBASE_CONFIG : null;
 const GEMINI_MODEL = 'gemini-2.5-flash';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
