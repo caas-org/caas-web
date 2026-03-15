@@ -83,7 +83,9 @@
 }
 
 /* --- Reset & Base --- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -110,14 +112,20 @@ body {
 }
 
 /* --- Language Switching --- */
-html.lang-en .zh { display: none; }
-html.lang-zh .en { display: none; }
+html.lang-en .zh {
+  display: none;
+}
+
+html.lang-zh .en {
+  display: none;
+}
 
 /* Titles always show both languages */
 .bilingual-title .en,
 .bilingual-title .zh {
   display: block !important;
 }
+
 .bilingual-title .zh {
   font-size: 0.85em;
   opacity: 0.8;
@@ -125,15 +133,31 @@ html.lang-zh .en { display: none; }
 }
 
 /* --- Typography --- */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.3;
   font-weight: 600;
 }
 
-h1 { font-size: var(--font-size-4xl); }
-h2 { font-size: var(--font-size-3xl); }
-h3 { font-size: var(--font-size-2xl); }
-h4 { font-size: var(--font-size-xl); }
+h1 {
+  font-size: var(--font-size-4xl);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+}
 
 .footer-about h3 {
   font-size: var(--font-size-xl);
@@ -142,12 +166,12 @@ h4 { font-size: var(--font-size-xl); }
 }
 
 .footer-logo {
-  height: 60px;
+  height: 200px;
   width: auto;
   object-fit: contain;
   border-radius: var(--border-radius-md);
   background: white;
-  padding: 6px;
+  padding: 16px;
   display: block;
 }
 
@@ -171,7 +195,8 @@ a:hover {
   color: var(--primary-light);
 }
 
-ul, ol {
+ul,
+ol {
   padding-left: var(--space-6);
   margin-bottom: var(--space-4);
 }
@@ -221,7 +246,8 @@ li {
   width: 40px;
   object-fit: contain;
   border-radius: var(--border-radius-sm);
-  background: white; /* Since the AI logo has a white background */
+  background: white;
+  /* Since the AI logo has a white background */
   padding: 2px;
 }
 
@@ -372,8 +398,13 @@ main {
 }
 
 @keyframes heroGlow {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(-5%, 5%) scale(1.1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(-5%, 5%) scale(1.1);
+  }
 }
 
 .hero-content {
@@ -763,17 +794,32 @@ main {
 }
 
 /* --- Utility --- */
-.text-center { text-align: center; }
+.text-center {
+  text-align: center;
+}
+
 .text-gradient {
   background: linear-gradient(135deg, var(--primary-light), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.mt-4 { margin-top: var(--space-4); }
-.mt-8 { margin-top: var(--space-8); }
-.mb-4 { margin-bottom: var(--space-4); }
-.mb-8 { margin-bottom: var(--space-8); }
+
+.mt-4 {
+  margin-top: var(--space-4);
+}
+
+.mt-8 {
+  margin-top: var(--space-8);
+}
+
+.mb-4 {
+  margin-bottom: var(--space-4);
+}
+
+.mb-8 {
+  margin-bottom: var(--space-8);
+}
 
 /* --- Steps list --- */
 .steps-list {
@@ -953,16 +999,16 @@ main {
   transition: opacity var(--transition-fast);
 }
 
-.checklist-item input:checked ~ .checkmark {
+.checklist-item input:checked~.checkmark {
   background: var(--warning);
   border-color: var(--warning);
 }
 
-.checklist-item input:checked ~ .checkmark::after {
+.checklist-item input:checked~.checkmark::after {
   opacity: 1;
 }
 
-.checklist-item input:checked ~ .question-text {
+.checklist-item input:checked~.question-text {
   color: var(--warning);
 }
 
@@ -1004,7 +1050,7 @@ main {
   box-shadow: 0 0 0 2px var(--primary-glow);
 }
 
-.checklist-item input:checked ~ .question-text .detail-input {
+.checklist-item input:checked~.question-text .detail-input {
   opacity: 1;
   visibility: visible;
   height: auto;
@@ -1038,7 +1084,9 @@ main {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .ai-loading p {
@@ -1151,9 +1199,11 @@ main {
   .nav-hamburger.active span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
   }
+
   .nav-hamburger.active span:nth-child(2) {
     opacity: 0;
   }
+
   .nav-hamburger.active span:nth-child(3) {
     transform: rotate(-45deg) translate(5px, -5px);
   }
@@ -1215,12 +1265,14 @@ main {
     margin: 0;
     padding: 0;
   }
-  
+
   /* Hide all UI elements except print area */
-  .navbar, .footer, main {
+  .navbar,
+  .footer,
+  main {
     display: none !important;
   }
-  
+
   .print-only {
     display: block !important;
     width: 100%;
@@ -1237,13 +1289,13 @@ main {
     padding-bottom: 20px;
     margin-bottom: 30px;
   }
-  
+
   .print-header h1 {
     font-size: 24px;
     color: #000 !important;
     margin-bottom: 5px;
   }
-  
+
   .print-section {
     margin-bottom: 30px;
   }
@@ -1280,7 +1332,7 @@ main {
     padding-left: 10px;
     margin-top: 8px;
   }
-  
+
   .print-disclaimer {
     margin-top: 40px;
     padding: 15px;
