@@ -11,5 +11,6 @@
 
 const CONFIG = {
   GEMINI_API_KEY: 'YOUR_API_KEY_HERE',
-  EMAIL: 'your-email@example.com'
+  EMAIL: 'your-email@example.com',
+  WEB3FORMS_KEY: 'YOUR_WEB3FORMS_ACCESS_KEY_HERE'
 };
