@@ -242,7 +242,7 @@ CRITICAL RULES:
     if (GEMINI_API_KEY && GEMINI_API_KEY !== 'YOUR_API_KEY_HERE') {
       // MODE 1: Local Development (Direct REST API)
       const data = {
-        contents: [{ parts: [{ text: userMessage }] }],
+        contents: [{ parts: [{ text: userPrompt }] }],
         systemInstruction: {
           parts: [{ text: systemPrompt }]
         },
@@ -285,7 +285,7 @@ CRITICAL RULES:
         });
       }
       
-      const result = await firebaseModel.generateContent(userMessage);
+      const result = await firebaseModel.generateContent(userPrompt);
       resultText = result.response.text();
 
     } else {
