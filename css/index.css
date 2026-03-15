@@ -188,10 +188,25 @@ li {
 
 .nav-logo {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   text-decoration: none;
-  gap: 0;
+  gap: var(--space-3);
   line-height: 1.2;
+}
+
+.nav-logo-icon {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+  border-radius: var(--border-radius-sm);
+  background: white; /* Since the AI logo has a white background */
+  padding: 2px;
+}
+
+.nav-logo-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .nav-logo .en {
