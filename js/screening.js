@@ -233,8 +233,14 @@ CRITICAL RULES:
 
   try {
     // 1. Load Keys Dynamically safely
-    const GEMINI_API_KEY = typeof window.LOCAL_KEYS !== 'undefined' ? window.LOCAL_KEYS.GEMINI_API_KEY : '';
+    let GEMINI_API_KEY = typeof window.LOCAL_KEYS !== 'undefined' ? window.LOCAL_KEYS.GEMINI_API_KEY : '';
     const FIREBASE_CONFIG = typeof CONFIG !== 'undefined' ? CONFIG.FIREBASE_CONFIG : null;
+    
+    // Support Web Developer API key via split combination if LOCAL_KEYS fails
+    if (!GEMINI_API_KEY && typeof CONFIG !== 'undefined' && CONFIG.GEMINI_KEY_PART1 && CONFIG.GEMINI_KEY_PART2) {
+      GEMINI_API_KEY = CONFIG.GEMINI_KEY_PART1 + CONFIG.GEMINI_KEY_PART2;
+    }
+
     const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
     let resultText = '';
@@ -247,7 +253,7 @@ CRITICAL RULES:
           parts: [{ text: systemPrompt }]
         },
         generationConfig: {
-          temperature: 0.3, 
+          temperature: 0.3,
           topK: 40,
           topP: 0.95,
         }
@@ -265,16 +271,16 @@ CRITICAL RULES:
       resultText = json.candidates[0].content.parts[0].text;
 
     } else if (FIREBASE_CONFIG) {
-      // MODE 2: Production (Firebase AI Logic SDK)
+      // MODE 2: Production (Firebase AI Logic SDK using Gemini Developer API backend)
       if (!firebaseModel) {
-        // Dynamically import Firebase SDKs
+        // Dynamically import Firebase SDKs for AI Logic
         const { initializeApp } = await import('https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js');
-        const { getVertexAI, getGenerativeModel } = await import('https://www.gstatic.com/firebasejs/11.1.0/firebase-vertexai.js');
-        
+        const { getAI, getGenerativeModel, GoogleAIBackend } = await import('https://www.gstatic.com/firebasejs/11.1.0/firebase-ai.js');
+
         const app = initializeApp(FIREBASE_CONFIG);
-        const vertexAI = getVertexAI(app);
-        
-        firebaseModel = getGenerativeModel(vertexAI, { 
+        const ai = getAI(app, { backend: new GoogleAIBackend() });
+
+        firebaseModel = getGenerativeModel(ai, {
           model: GEMINI_MODEL,
           systemInstruction: systemPrompt,
           generationConfig: {
@@ -284,10 +290,9 @@ CRITICAL RULES:
           }
         });
       }
-      
+
       const result = await firebaseModel.generateContent(userPrompt);
       resultText = result.response.text();
-
     } else {
       // Configuration Error
       throw new Error('API Key or Firebase Config not found in config.js');
@@ -296,7 +301,7 @@ CRITICAL RULES:
     loadingEl.style.display = 'none';
     // Assuming formatGeminiResponse is a new function or renderMarkdown is renamed/updated
     // For now, we'll use renderMarkdown as it exists.
-    const cleanHtml = renderMarkdown(resultText); 
+    const cleanHtml = renderMarkdown(resultText);
     responseContent.innerHTML = cleanHtml;
     responseContent.style.display = 'block';
     aiActions.style.display = 'block';
@@ -334,7 +339,7 @@ CRITICAL RULES:
 // ============================================================
 function generatePrintReport() {
   const currentLang = document.documentElement.classList.contains('lang-zh') ? 'zh' : 'en';
-  
+
   const checked = getCheckedItems();
   const unchecked = getUncheckedItems();
   const data = checklistData[currentAgeGroup];
