@@ -233,19 +233,26 @@ CRITICAL RULES:
 
   try {
     // 1. Load Keys Dynamically safely
-    let GEMINI_API_KEY = typeof window.LOCAL_KEYS !== 'undefined' ? window.LOCAL_KEYS.GEMINI_API_KEY : '';
+    const GEMINI_API_KEY = typeof window.LOCAL_KEYS !== 'undefined' ? window.LOCAL_KEYS.GEMINI_API_KEY : '';
     const FIREBASE_CONFIG = typeof CONFIG !== 'undefined' ? CONFIG.FIREBASE_CONFIG : null;
+    const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
     
-    // Support Web Developer API key via split combination if LOCAL_KEYS fails
-    if (!GEMINI_API_KEY && typeof CONFIG !== 'undefined' && CONFIG.GEMINI_KEY_PART1 && CONFIG.GEMINI_KEY_PART2) {
-      GEMINI_API_KEY = CONFIG.GEMINI_KEY_PART1 + CONFIG.GEMINI_KEY_PART2;
+    // Check Local Dev Toggle Override
+    let activeRoute = 'rest'; // Default
+    if (GEMINI_API_KEY) {
+      activeRoute = 'rest';
+    } else if (FIREBASE_CONFIG) {
+      activeRoute = 'firebase';
     }
 
-    const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+    const routeSelect = document.getElementById('api-route-select');
+    if (routeSelect && routeSelect.value) {
+      activeRoute = routeSelect.value;
+    }
 
     let resultText = '';
 
-    if (GEMINI_API_KEY && GEMINI_API_KEY !== 'YOUR_API_KEY_HERE') {
+    if (activeRoute === 'rest' && GEMINI_API_KEY && GEMINI_API_KEY !== 'YOUR_API_KEY_HERE') {
       // MODE 1: Local Development (Direct REST API)
       const data = {
         contents: [{ parts: [{ text: userPrompt }] }],
@@ -270,7 +277,7 @@ CRITICAL RULES:
       }
       resultText = json.candidates[0].content.parts[0].text;
 
-    } else if (FIREBASE_CONFIG) {
+    } else if (activeRoute === 'firebase' && FIREBASE_CONFIG) {
       // MODE 2: Production (Firebase AI Logic SDK using Gemini Developer API backend)
       if (!firebaseModel) {
         // Dynamically import Firebase SDKs for AI Logic
@@ -458,6 +465,43 @@ document.addEventListener('DOMContentLoaded', function () {
   if (submitBtn) {
     submitBtn.addEventListener('click', getAIGuidance);
   }
+
+  // Add event listeners to all checkboxes
+  document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    if (checkbox) {
+      checkbox.addEventListener('change', updateSubmitButtonState);
+    }
+  });
+
+  // Initialize Local Development API Route Toggle
+  if (['localhost', '127.0.0.1', ''].includes(window.location.hostname)) {
+    const toggleContainer = document.getElementById('api-toggle-container');
+    const routeSelect = document.getElementById('api-route-select');
+
+    if (toggleContainer && routeSelect) {
+      toggleContainer.style.display = 'flex';
+
+      const hasLocalKey = typeof window.LOCAL_KEYS !== 'undefined' && window.LOCAL_KEYS.GEMINI_API_KEY;
+      const hasSplitKey = typeof CONFIG !== 'undefined' && CONFIG.GEMINI_KEY_PART1 && CONFIG.GEMINI_KEY_PART2;
+      const hasFirebase = typeof CONFIG !== 'undefined' && CONFIG.FIREBASE_CONFIG;
+
+      let html = '';
+      if (hasLocalKey || hasSplitKey) {
+        html += '<option value="rest">Direct REST API (Gemini Studio Key)</option>';
+      }
+      if (hasFirebase) {
+        html += '<option value="firebase">Firebase AI Logic SDK (Production)</option>';
+      }
+
+      if (html) {
+        routeSelect.innerHTML = html;
+      } else {
+        routeSelect.innerHTML = '<option value="">No valid config found</option>';
+      }
+    }
+  }
+
+  updateSubmitButtonState();
 
   // Print button
   const printBtn = document.getElementById('print-btn');

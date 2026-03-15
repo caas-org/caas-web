@@ -109,11 +109,21 @@
           <!-- Dynamically populated by screening.js -->
         </div>
 
-        <div style="text-align:center; margin-top:32px;">
+        <div style="text-align:center; margin-top:32px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
           <button id="submit-btn" class="btn btn-primary btn-lg">
             <span class="en">🤖 Get AI-Powered Guidance</span>
             <span class="zh">🤖 获取AI智能指导</span>
           </button>
+          
+          <!-- Local Development Feature: API Route Toggle -->
+          <div id="api-toggle-container" style="display: none; background: var(--bg-card); padding: 10px; border-radius: 8px; border: 1px dashed var(--accentColor); font-size: 0.9em;">
+            <label for="api-route-select" style="font-weight: bold; margin-right: 10px; color: var(--accentColor);">
+              🛠 Local Test Route:
+            </label>
+            <select id="api-route-select" style="padding: 5px; border-radius: 4px; border: 1px solid var(--text-muted); background: var(--bg-body); color: var(--text-main);">
+              <!-- Will be populated by JS based on available configs -->
+            </select>
+          </div>
         </div>
       </section>
 
