@@ -9,10 +9,8 @@
  * and add your key.
  * ============================================================
  */
-const GEMINI_API_KEY = typeof window.LOCAL_KEYS !== 'undefined' ? window.LOCAL_KEYS.GEMINI_API_KEY : '';
-const FIREBASE_CONFIG = typeof CONFIG !== 'undefined' ? CONFIG.FIREBASE_CONFIG : null;
+// API Keys and configs will be loaded dynamically when getAIGuidance is called.
 const GEMINI_MODEL = 'gemini-2.5-flash';
-const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 let firebaseModel = null;
 
 // ============================================================
@@ -234,9 +232,11 @@ CRITICAL RULES:
   userPrompt += `5. Relevant resources and who to contact`;
 
   try {
-    if (GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
-      throw new Error('API_KEY_NOT_SET');
-    }
+    // 1. Load Keys Dynamically safely
+    const GEMINI_API_KEY = typeof window.LOCAL_KEYS !== 'undefined' ? window.LOCAL_KEYS.GEMINI_API_KEY : '';
+    const FIREBASE_CONFIG = typeof CONFIG !== 'undefined' ? CONFIG.FIREBASE_CONFIG : null;
+    const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+
     let resultText = '';
 
     if (GEMINI_API_KEY && GEMINI_API_KEY !== 'YOUR_API_KEY_HERE') {
