@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" class="lang-en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact | 联系我们 - CAARC</title>
-  <meta name="description" content="Contact the Chinese American Autism Resource Center with questions, suggestions, or to share your story.">
+  <meta name="description"
+    content="Contact the Chinese American Autism Resource Center with questions, suggestions, or to share your story.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.caasus.org/contact.html">
   <meta property="og:title" content="Contact | 联系我们 - CAARC">
-  <meta property="og:description" content="Contact the Chinese American Autism Resource Center with questions, suggestions, or to share your story.">
+  <meta property="og:description"
+    content="Contact the Chinese American Autism Resource Center with questions, suggestions, or to share your story.">
   <meta property="og:image" content="https://www.caasus.org/images/logo_text.png">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
   <main>
 
@@ -113,7 +117,7 @@
                   <span class="en">📧 Email</span>
                   <span class="zh">📧 邮箱</span>
                 </h3>
-                <p><a href="mailto:info@caarc.org">info@caarc.org</a></p>
+                <p><a id="contact-email" href="#">Loading...</a></p>
               </div>
 
               <div style="margin-bottom:24px;">
@@ -130,7 +134,8 @@
                   <span class="en">🕐 Response Time</span>
                   <span class="zh">🕐 回复时间</span>
                 </h3>
-                <p class="en">We typically respond within 1-2 business days. Messages in both English and Chinese are welcome.</p>
+                <p class="en">We typically respond within 1-2 business days. Messages in both English and Chinese are
+                  welcome.</p>
                 <p class="zh">我们通常在1-2个工作日内回复。欢迎使用中文或英文留言。</p>
               </div>
             </div>
@@ -145,7 +150,8 @@
               <div class="en">
                 <p>If you or your child are in crisis, please contact:</p>
                 <ul>
-                  <li><strong>988 Suicide & Crisis Lifeline:</strong> Call or text 988 (available in multiple languages)</li>
+                  <li><strong>988 Suicide & Crisis Lifeline:</strong> Call or text 988 (available in multiple languages)
+                  </li>
                   <li><strong>Crisis Text Line:</strong> Text HOME to 741741</li>
                   <li><strong>Emergency:</strong> Call 911</li>
                 </ul>
@@ -177,12 +183,26 @@
       // For static site, show a message directing to email
       const lang = document.documentElement.classList.contains('lang-zh') ? 'zh' : 'en';
       if (lang === 'zh') {
-        status.innerHTML = '<div class="info-box success"><p>感谢您的留言！由于这是一个静态网站，请将您的消息直接发送到 <a href="mailto:info@caarc.org">info@caarc.org</a>。我们会尽快回复您。</p></div>';
+        status.innerHTML = '<div class="info-box success"><p>感谢您的留言！由于这是一个静态网站，请将您的消息直接发送到我们的邮箱。我们会尽快回复您。</p></div>';
       } else {
-        status.innerHTML = '<div class="info-box success"><p>Thank you for your message! Since this is a static website, please email your message directly to <a href="mailto:info@caarc.org">info@caarc.org</a>. We\'ll get back to you soon.</p></div>';
+        status.innerHTML = '<div class="info-box success"><p>Thank you for your message! Since this is a static website, please email your message directly to us. We\'ll get back to you soon.</p></div>';
       }
     }
+
+    // Populate email from config
+    document.addEventListener('DOMContentLoaded', function() {
+      var emailEl = document.getElementById('contact-email');
+      if (typeof CONFIG !== 'undefined' && CONFIG.EMAIL) {
+        emailEl.href = 'mailto:' + CONFIG.EMAIL;
+        emailEl.textContent = CONFIG.EMAIL;
+      } else {
+        emailEl.href = '#';
+        emailEl.textContent = 'Please set up js/config.js';
+      }
+    });
   </script>
+  <script src="js/config.js"></script>
   <script src="js/nav.js"></script>
 </body>
+
 </html>
