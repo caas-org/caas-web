@@ -170,7 +170,7 @@
   <script src="js/config.js"></script>
   <!-- Load Local API Keys (Gitignored, for local testing only) -->
   <script>
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    if (['localhost', '127.0.0.1', ''].includes(window.location.hostname)) {
       document.write('<script src="js/keys.js"><\/script>');
     }
   </script>
