@@ -173,6 +173,12 @@
     // Inject footer at end of body
     document.body.insertAdjacentHTML('beforeend', buildFooter());
 
+    // Inject script and css for Chat Widget dynamically
+    document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="css/chat.css">');
+    const chatScript = document.createElement('script');
+    chatScript.src = 'js/chat.js';
+    document.body.appendChild(chatScript);
+
     // Language toggle
     document.getElementById('lang-toggle-btn').addEventListener('click', toggleLang);
 
