@@ -89,7 +89,15 @@
         <ul class="nav-links" id="nav-links">
           ${linksHTML}
         </ul>
-        <div class="nav-actions" style="display:flex;align-items:center;gap:8px;">
+        <div class="nav-actions" style="display:flex;align-items:center;gap:12px;">
+          <!-- Search Button -->
+          <button class="search-toggle" id="nav-search-btn" aria-label="Search" style="background:none; border:none; cursor:pointer; display:flex; align-items:center; color:#333;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+          
           <button class="lang-toggle" id="lang-toggle-btn" aria-label="Switch language" title="Switch language">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"></circle>
@@ -173,14 +181,26 @@
     // Inject footer at end of body
     document.body.insertAdjacentHTML('beforeend', buildFooter());
 
-    // Inject script and css for Chat Widget dynamically
+    // Inject scripts and css dynamically
     document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="css/chat.css">');
+    document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="css/search.css">');
+    
     const chatScript = document.createElement('script');
     chatScript.src = 'js/chat.js';
     document.body.appendChild(chatScript);
 
+    const searchScript = document.createElement('script');
+    searchScript.src = 'js/search.js';
+    document.body.appendChild(searchScript);
+
     // Language toggle
     document.getElementById('lang-toggle-btn').addEventListener('click', toggleLang);
+    
+    // Search toggle trigger
+    document.getElementById('nav-search-btn').addEventListener('click', function() {
+      // Dispatch custom event that search.js listens for
+      document.dispatchEvent(new Event('open-site-search'));
+    });
 
     // Hamburger menu
     const hamburger = document.getElementById('nav-hamburger');
