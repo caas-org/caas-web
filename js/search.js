@@ -6,9 +6,9 @@
 (function () {
   'use strict';
 
-  // ============================================================
+  // ===========================================================
   // Search Index (Static Database)
-  // ============================================================
+  // ===========================================================
   const searchIndex = [
     {
       url: 'index.html',
@@ -101,9 +101,9 @@
   function toggleSearch() {
     const overlay = document.getElementById('search-overlay');
     const input = document.getElementById('search-input');
-    
+
     isSearchOpen = !isSearchOpen;
-    
+
     if (isSearchOpen) {
       overlay.classList.add('open');
       input.value = ''; // Clear previous
@@ -124,7 +124,7 @@
     }
 
     const lang = getLang();
-    
+
     // Filter index
     const results = searchIndex.filter(item => {
       const titleMatch = item.title.en.toLowerCase().includes(query) || item.title.zh.toLowerCase().includes(query);
@@ -139,13 +139,13 @@
   function renderResults(results) {
     const container = document.getElementById('search-results');
     const lang = getLang();
-    
+
     if (results.length === 0 && document.getElementById('search-input').value.trim() !== '') {
       const msg = lang === 'en' ? 'No results found.' : '未找到相关结果。';
       container.innerHTML = `<div class="no-results">${msg}</div>`;
       return;
     }
-    
+
     if (results.length === 0) {
       container.innerHTML = '';
       return;
@@ -171,7 +171,7 @@
     }
     // Re-render results to update language language context
     if (isSearchOpen) {
-       handleInput({ target: input });
+      handleInput({ target: input });
     }
   }
 
@@ -180,22 +180,22 @@
   // ============================================================
   function init() {
     buildSearchModal();
-    
+
     // Listen for search open clicks (Triggered by button added to nav.js)
     document.addEventListener('open-site-search', toggleSearch);
-    
+
     const overlay = document.getElementById('search-overlay');
     const closeBtn = document.getElementById('search-close-btn');
     const input = document.getElementById('search-input');
-    
+
     // Event listeners
     closeBtn.addEventListener('click', toggleSearch);
-    
+
     // Close on clicking outside the modal
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) toggleSearch();
     });
-    
+
     // Close on Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && isSearchOpen) toggleSearch();
@@ -212,7 +212,7 @@
       });
     });
     observer.observe(document.documentElement, { attributes: true });
-    
+
     // Initialize correct language placeholder
     updateSearchLanguage();
   }
